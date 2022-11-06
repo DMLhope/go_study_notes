@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func process(w http.ResponseWriter, r *http.Request) {
+func process_1(w http.ResponseWriter, r *http.Request) {
 	// r.ParseMultipartForm(1024)
 
 	// fileHeader := r.MultipartForm.File["uploaded"][0]
@@ -25,6 +25,6 @@ func main6() {
 	server := http.Server{
 		Addr: "localhost:9000",
 	}
-	http.HandleFunc("/process", process)
+	http.HandleFunc("/process", process_1)
 	server.ListenAndServe()
 }

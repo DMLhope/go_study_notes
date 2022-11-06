@@ -13,7 +13,7 @@
 
 + Web 模板就是预先设计好的 HTML 页面，它可以被模板引擎反复的使用，来产生 HTML 页面
 + Go 的标准库提供了 text/template，html/template 两个模板库
-大多数 Go 的 Web 框架都使用这些库作为 默认的模板引擎
+大多数 Go 的 Web 框架都使用这些库作为默认的模板引擎
 
 ## 模板与模板引擎
 
@@ -89,6 +89,44 @@
 
 ### 例子
 
+```go
+package main
+
+import (
+	"net/http"
+	"text/template"
+)
+
+func main() {
+	server := http.Server{
+		Addr: "localhost:9000",
+	}
+	http.HandleFunc("/process", process)
+	server.ListenAndServe()
+}
+
+func process(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("tmpl.html")
+	t.Execute(w, "hello World!")
+}
+
+```
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template</title>
+</head>
+<body>
+    {{ . }}
+</body>
+</html>
+```
+
 ## 解析模板
 
 + ParseFiles
@@ -106,11 +144,25 @@
 
 #### 例子
 
+```go
+func main() {
+	//此函数的实现基本就是先将文件内容转换成字符串并将文件路径解析获得文件名不包含路径用来建一个新的模板，然后调用Parse方法来解析模板里的字符串
+	// t, _ := template.ParseFiles("tmpl.html")
+	//下面两句等价上面这句
+	t := template.New("tmpl.html")
+	t, _ = t.ParseFiles("tmpl.html")
+}
+```
+
 ### ParseGlob
 
 使用模式匹配来解析特定的文件
 
 #### 例子
+
+```go
+t, _ := template.ParseGlob("*.html")
+```
 
 ### Parse
 

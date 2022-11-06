@@ -44,7 +44,7 @@ func jsonExample(w http.ResponseWriter, r *http.Request) {
 	w.Write(json)
 }
 
-func main() {
+func main7() {
 	server := http.Server{
 		Addr: "localhost:9000",
 	}
